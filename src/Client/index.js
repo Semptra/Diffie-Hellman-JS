@@ -1,10 +1,20 @@
 const chalk = require('chalk');
 const clear = require('clear');
-const figlet = require('figlet');
+const x = require('figlet')
+const axios = require('axios');
+const diffie = require('../shared/diffie');
 
-clear();
-console.log(
-    chalk.yellow(
-        figlet.textSync('Ya sosu bibu', { horizontalLayout: 'full' })
-    )
-);
+var axiosClient = axios.create({
+    baseURL: 'http://localhost:3000'
+});
+
+var a = diffie.getRandomNatural();
+var A = diffie.getOpenKey(a);
+
+axiosClient.post('/firstExchange', { A })
+    .then(response => {
+        console.log(responce)
+    })
+    .catch(e => {
+        console.log(e);
+    });
