@@ -11,9 +11,21 @@ var axiosClient = axios.create({
 var a = diffie.getRandomNatural();
 var A = diffie.getOpenKey(a);
 
-axiosClient.post('/firstExchange', { A })
+console.log('p: ' + diffie.p);
+console.log('g: ' + diffie.g);
+
+console.log('Private key on client: ' + a);
+console.log('Public key on client: ' + A);
+
+axiosClient.post('/exchange', { A })
     .then(response => {
-        console.log(responce)
+        var B = response.data;
+
+        console.log('Public key comes from server: ' + B);
+
+        var s = diffie.getPrivateKey(B, a);
+
+        console.log('Shared secret: ' + s);
     })
     .catch(e => {
         console.log(e);
